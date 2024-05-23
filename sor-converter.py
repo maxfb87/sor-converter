@@ -10,7 +10,7 @@ def set_flat_hierarchy(x):
     return 1
 
 
-path = "./EPU_prezzario2013.ods"
+path = "./EPU_prezzario2023.ods"
 
 map = {
     "Codice" : "Identification",
@@ -36,6 +36,23 @@ df = df[df.Value.notnull()]
 df["Hierarchy"] = df["Identification"].apply(set_flat_hierarchy)
 
 #df = df.head(5760)
+
+df = df.replace("%", "perc")
+df = df.replace("m³", "mc")
+df = df.replace("m²", "mq")
+df = df.replace("dm²", "dmq")
+df = df.replace("dm³", "dmc")
+df = df.replace("m²*cm", "mq*cm")
+df = df.replace("m²/me", "mq/me")
+df = df.replace("m²*h", "mq*h")
+df = df.replace("m²*mm", "mq*mm")
+df = df.replace("m²cm", "mqcm")
+df = df.replace("m²x gg", "mq x gg")
+df = df.replace("m²/mese", "mq/mese")
+df = df.replace("m³ x km", "mc x km")
+df = df.replace("m³vpp", "mc vpp")
+df = df.replace("m³/me", "mc/me")
+df = df.replace(r'^\s*$', "cad..", regex=True)
 
 print(df.columns)
 print(df.head())
