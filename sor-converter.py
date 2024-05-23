@@ -6,6 +6,10 @@ def get_hierarchy(id):
 def get_quantity(x):
     return 1
 
+def set_flat_hierarchy(x):
+    return 1
+
+
 path = "./EPU_prezzario2013.ods"
 
 map = {
@@ -27,12 +31,16 @@ df["Quantity"] = df["Identification"].apply(get_quantity)
 
 df = df.reindex(columns = ["Hierarchy", "Identification", "Name", "Quantity", "Unit", "Value"])
 
-df = df.head(56)
+df = df[df.Value.notnull()]
+
+df["Hierarchy"] = df["Identification"].apply(set_flat_hierarchy)
+
+#df = df.head(5760)
 
 print(df.columns)
 print(df.head())
 print(df.dtypes)
 
-df.to_csv("./EPU_prezzario2013.csv", index = False)
+df.to_csv("./EPU_prezzario2023.csv", index = False)
 
 
